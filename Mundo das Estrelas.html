@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mundo das Estrelas: jogos de matemática e português</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E9F3FF;--surface:#FFFFFF;--ink:#14213D;--muted:#4A5878;--line:#C4D4EE;--night:#14213D;--night2:#223669;--sun:#FFB703;--mint:#2EC4B6;--pink:#FF5D8F;--ok:#0E7A57;--bad:#B3261E;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1128;--surface:#17223F;--ink:#EAF0FF;--muted:#A9B7D6;--line:#2C3C69;--night:#0F1A3A;--night2:#1D2E60;--ok:#5FE0B0;--bad:#FF8A80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0B1128;--surface:#17223F;--ink:#EAF0FF;--muted:#A9B7D6;--line:#2C3C69;--night:#0F1A3A;--night2:#1D2E60;--ok:#5FE0B0;--bad:#FF8A80;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 18px/1.55 "Nunito",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Baloo 2","Trebuchet MS",system-ui,sans-serif;line-height:1.1;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:4px solid var(--sun);outline-offset:3px}
+[hidden]{display:none!important}
+.wrap{max-width:920px;margin:0 auto;padding:16px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0 14px}
+.brand{font:800 26px "Baloo 2",sans-serif;display:flex;align-items:center;gap:8px}
+.brand b{color:var(--sun);font-size:30px}
+.total{background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:800}
+.total b{color:var(--sun)}
+.sky{background:var(--night);background-image:radial-gradient(2px 2px at 12% 20%,#fff9,transparent),radial-gradient(1.5px 1.5px at 70% 12%,#fff8,transparent),radial-gradient(2px 2px at 88% 60%,#fff9,transparent),radial-gradient(1.5px 1.5px at 30% 85%,#fff7,transparent),radial-gradient(2px 2px at 55% 50%,#fff6,transparent);color:#fff;border-radius:28px;padding:28px 20px 24px}
+.sky h1{font-size:clamp(34px,7vw,56px);font-weight:800}
+.sky p.lead{margin:10px 0 22px;max-width:46ch;color:#DCE6FF}
+.const{margin-top:18px;--acc:var(--mint)}
+.const[data-s="por"]{--acc:var(--pink)}
+.const h2{font-size:24px;color:var(--acc);margin-bottom:8px}
+.nodes{display:flex;gap:12px;position:relative}
+.nodes::before{content:"";position:absolute;left:14%;right:14%;top:50%;border-top:3px dashed #ffffff55}
+.node{flex:1;position:relative;background:var(--night2);border:3px solid #ffffff40;color:#fff;border-radius:20px;padding:12px 6px;text-align:center;min-height:84px;transition:transform .15s,border-color .15s}
+.node:hover{border-color:var(--acc);transform:translateY(-3px)}
+.node .st{display:block;font-size:24px;letter-spacing:2px;line-height:1.2}
+.node i{font-style:normal;color:#ffffff55}
+.node i.on{color:var(--sun)}
+.node .lv{display:block;font-weight:800}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:20px;margin-top:16px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:800}
+.meter{height:12px;background:var(--line);border-radius:999px;overflow:hidden;margin:12px 0 22px}
+.meter div{height:100%;width:0;background:var(--mint);transition:width .3s}
+.q{font-size:clamp(26px,6vw,42px);font-weight:800;margin-bottom:20px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.opt{min-height:68px;border:3px solid var(--line);background:var(--surface);border-radius:18px;font:800 22px "Nunito",sans-serif;padding:10px}
+.opt:hover:not(:disabled){border-color:var(--sun)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--surface))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--surface))}
+.opt:disabled{cursor:default}
+.fb{min-height:2.2em;margin:16px 0 8px;font-weight:800;font-size:20px}
+.fb.ok{color:var(--ok)}.fb.no{color:var(--bad)}
+.btn{background:var(--sun);color:#14213D;border:0;border-radius:16px;padding:12px 22px;font-weight:800;font-size:19px;min-height:48px}
+.btn.alt{background:transparent;color:var(--ink);border:3px solid var(--line)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.big{font-size:56px;letter-spacing:6px;text-align:center}
+.big i{font-style:normal;color:var(--line)}.big i.on{color:var(--sun)}
+.res{text-align:center}.res .row{justify-content:center;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:12px}
+.stat{border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.stat b{display:block;font:800 32px "Baloo 2",sans-serif}
+.info h2{font-size:28px;margin-bottom:8px}
+.info p{margin:8px 0;max-width:64ch}
+footer{color:var(--muted);font-size:15px;padding:18px 0 8px}
+@media (max-width:480px){.node .st{font-size:20px}.nodes{gap:8px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><b aria-hidden="true">★</b> Mundo das Estrelas</div>
+    <div class="total" aria-live="polite">Estrelas: <b id="tot">0</b></div>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="sky">
+        <h1>Ganhe estrelas aprendendo.</h1>
+        <p class="lead">Escolha um jogo e um nível. Cada rodada tem 8 perguntas e você pode jogar quantas vezes quiser.</p>
+        <div id="nodes"></div>
+      </div>
+      <div class="card">
+        <h2>Seu progresso</h2>
+        <div class="stats" id="stats"></div>
+        <div class="row" style="margin-top:14px"><button class="btn alt" id="reset" type="button">Apagar progresso</button></div>
+      </div>
+      <div class="card info">
+        <h2>Para professores e responsáveis</h2>
+        <p>Este é um protótipo do projeto de extensão sobre jogos educativos para crianças de cerca de 9 anos. Há perguntas curtas de matemática e português em três níveis de dificuldade.</p>
+        <p>O progresso (rodadas, acertos e estrelas por nível) fica salvo só neste aparelho, neste navegador.</p>
+        <p>O projeto se relaciona ao ODS 4, Educação de Qualidade. O conteúdo ainda deve ser revisado com professores e responsáveis e testado com as crianças, com supervisão, antes do uso regular.</p>
+      </div>
+    </section>
+
+    <section id="game" hidden>
+      <div class="card">
+        <div class="bar"><span id="gtitle"></span><span id="gcount"></span></div>
+        <div class="meter" aria-hidden="true"><div id="gbar"></div></div>
+        <div class="q" id="gq" aria-live="polite"></div>
+        <div class="opts" id="gopts"></div>
+        <div class="fb" id="gfb" aria-live="assertive"></div>
+        <div class="row">
+          <button class="btn" id="gnext" type="button" hidden>Próxima pergunta</button>
+          <button class="btn alt" id="gquit" type="button">Sair do jogo</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" hidden>
+      <div class="card res">
+        <h2 id="rtitle"></h2>
+        <div class="big" id="rstars" aria-hidden="true"></div>
+        <p id="rtext"></p>
+        <div class="row">
+          <button class="btn" id="again" type="button">Jogar de novo</button>
+          <button class="btn alt" id="home2" type="button">Escolher outro jogo</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>Protótipo educacional. Nenhum dado sai do seu aparelho.</footer>
+</div>
+
+<script>
+const SUBJ={mat:"Matemática",por:"Português"};
+const LV={facil:"Fácil",medio:"Médio",dificil:"Difícil"};
+const KEY="mundo-estrelas-v1";
+const N=8;
+let save={};
+try{save=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){save={}}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}};
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* Matemática: perguntas geradas */
+function mathQ(l){
+  let q,r;
+  if(l==="facil"){
+    const a=rnd(1,15),b=rnd(1,15);
+    if(Math.random()<.5){q=a+" + "+b;r=a+b}
+    else{const x=Math.max(a,b),y=Math.min(a,b);q=x+" − "+y;r=x-y}
+  }else if(l==="medio"){
+    const t=rnd(0,2);
+    if(t===0){const a=rnd(10,60),b=rnd(10,39);q=a+" + "+b;r=a+b}
+    else if(t===1){const a=rnd(40,99),b=rnd(10,39);q=a+" − "+b;r=a-b}
+    else{const a=rnd(2,5),b=rnd(2,10);q=a+" × "+b;r=a*b}
+  }else{
+    const t=rnd(0,2);
+    if(t===0){const a=rnd(6,10),b=rnd(3,10);q=a+" × "+b;r=a*b}
+    else if(t===1){const b=rnd(2,9);r=rnd(2,10);q=(b*r)+" ÷ "+b}
+    else{const a=rnd(10,40),b=rnd(2,5),c=rnd(2,5);q=b+" × "+c+" + "+a;r=b*c+a}
+  }
+  const s=new Set([r]);
+  while(s.size<4){const v=r+rnd(1,5)*(Math.random()<.5?-1:1);if(v>=0)s.add(v)}
+  return{q:"Quanto é "+q+"?",o:shuf([...s].map(String)),a:String(r)};
+}
+
+/* Português: [pergunta, certa, errada, errada] */
+const POR={
+facil:[
+["Qual é o plural de “gato”?","gatos","gatas","gatoz"],
+["Complete a palavra do brinquedo de chutar: BO_A","L","M","T"],
+["Qual palavra começa com a letra M?","mesa","porta","sapo"],
+["Quantas sílabas tem a palavra “casa”?","2","1","3"],
+["Qual é o contrário de “grande”?","pequeno","alto","forte"],
+["Qual palavra está escrita certa?","chuva","xuva","chuvah"],
+["Qual palavra rima com “pão”?","mão","pé","sol"],
+["Qual palavra é o nome de um animal?","leão","cadeira","livro"],
+["Qual é o feminino de “menino”?","menina","menine","meninu"],
+["Qual palavra termina com a letra A?","janela","livro","carro"]],
+medio:[
+["Qual palavra tem o mesmo sentido de “feliz”?","alegre","triste","bravo"],
+["Qual é o contrário de “rápido”?","lento","veloz","ligeiro"],
+["Quantas sílabas tem “borboleta”?","4","3","5"],
+["Qual é o plural de “pão”?","pães","pãos","pões"],
+["Qual é o plural de “animal”?","animais","animales","animals"],
+["Qual destas palavras é um verbo?","correr","mesa","azul"],
+["Complete: “Ontem eu ___ ao parque.”","fui","vou","irei"],
+["Qual sinal vai no fim da frase: “Que horas são__”","?",".","!"],
+["Qual destas palavras é um adjetivo?","bonito","pular","casa"],
+["Qual é o feminino de “professor”?","professora","professoro","professore"]],
+dificil:[
+["Qual palavra está escrita certa?","exceção","excessão","esceção"],
+["Complete: “Ele quer sair, ___ está chovendo.”","mas","mais","más"],
+["Complete: “Eu quero ___ suco.”","mais","mas","más"],
+["Qual palavra está acentuada certo?","árvore","arvóre","arvôre"],
+["Qual é a sílaba mais forte de “café”?","fé","ca","as duas"],
+["Complete: “Ontem nós ___ a lição.”","fizemos","fazemos","fazer"],
+["Qual é o grupo de peixes?","cardume","rebanho","matilha"],
+["Complete: “Moro aqui ___ dois anos.”","há","a","à"],
+["Qual é o plural de “cidadão”?","cidadãos","cidadães","cidadões"],
+["Qual frase está no passado?","Ela cantou ontem.","Ela canta hoje.","Ela cantará amanhã."]]
+};
+const porQ=l=>shuf(POR[l]).slice(0,N).map(x=>({q:x[0],o:shuf(x.slice(1)),a:x[1]}));
+
+/* Estado da rodada */
+let R=null;
+const show=id=>{["home","game","result"].forEach(v=>$(v).hidden=v!==id);window.scrollTo(0,0)};
+
+function renderHome(){
+  let tot=0,plays=0,right=0,all=0;
+  Object.values(save).forEach(v=>{tot+=v.best||0;plays+=v.plays||0;right+=v.right||0;all+=v.total||0});
+  $("tot").textContent=tot;
+  $("nodes").innerHTML=Object.keys(SUBJ).map(s=>
+    '<section class="const" data-s="'+s+'"><h2>'+SUBJ[s]+'</h2><div class="nodes">'+
+    Object.keys(LV).map(l=>{
+      const b=(save[s+"-"+l]&&save[s+"-"+l].best)||0;
+      return '<button type="button" class="node" data-s="'+s+'" data-l="'+l+'" aria-label="'+SUBJ[s]+", nível "+LV[l]+", "+b+' de 3 estrelas"><span class="st" aria-hidden="true">'+
+        [1,2,3].map(n=>'<i class="'+(n<=b?"on":"")+'">★</i>').join("")+'</span><span class="lv">'+LV[l]+'</span></button>';
+    }).join("")+'</div></section>').join("");
+  $("stats").innerHTML=plays===0
+    ?'<p style="margin:0">Nenhuma rodada ainda. Escolha uma estrela lá em cima para começar.</p>'
+    :'<div class="stat"><b>'+plays+'</b>rodadas jogadas</div><div class="stat"><b>'+Math.round(right/all*100)+'%</b>de acertos</div><div class="stat"><b>'+tot+'</b>estrelas ganhas</div>';
+  $("reset").textContent="Apagar progresso";$("reset").dataset.sure="";
+}
+
+function start(s,l){
+  R={s,l,qs:s==="mat"?Array.from({length:N},()=>mathQ(l)):porQ(l),i:0,right:0};
+  show("game");renderQ();
+}
+function renderQ(){
+  const q=R.qs[R.i];
+  $("gtitle").textContent=SUBJ[R.s]+", nível "+LV[R.l];
+  $("gcount").textContent="Pergunta "+(R.i+1)+" de "+N;
+  $("gbar").style.width=(R.i/N*100)+"%";
+  $("gq").textContent=q.q;
+  $("gfb").textContent="";$("gfb").className="fb";
+  $("gnext").hidden=true;
+  $("gopts").innerHTML=q.o.map(o=>'<button type="button" class="opt" data-v="'+o.replace(/"/g,"&quot;")+'">'+o+'</button>').join("");
+}
+function answer(btn){
+  const q=R.qs[R.i],ok=btn.dataset.v===q.a;
+  document.querySelectorAll(".opt").forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.v===q.a){b.classList.add("right");b.textContent="✓ "+b.dataset.v}
+    else if(b===btn){b.classList.add("wrong");b.textContent="✗ "+b.dataset.v}
+  });
+  if(ok)R.right++;
+  $("gfb").textContent=ok?"Isso mesmo! Muito bem.":"Quase! A resposta certa é “"+q.a+"”.";
+  $("gfb").className="fb "+(ok?"ok":"no");
+  $("gbar").style.width=((R.i+1)/N*100)+"%";
+  const last=R.i===N-1;
+  $("gnext").textContent=last?"Ver resultado":"Próxima pergunta";
+  $("gnext").hidden=false;$("gnext").focus();
+}
+function finish(){
+  const stars=R.right>=7?3:R.right>=5?2:R.right>=3?1:0;
+  const k=R.s+"-"+R.l,v=save[k]||{best:0,plays:0,right:0,total:0};
+  v.best=Math.max(v.best,stars);v.plays++;v.right+=R.right;v.total+=N;save[k]=v;persist();
+  $("rtitle").textContent=stars===3?"Você brilhou!":stars>0?"Muito bem!":"Boa tentativa!";
+  $("rstars").innerHTML=[1,2,3].map(n=>'<i class="'+(n<=stars?"on":"")+'">★</i>').join("");
+  $("rstars").setAttribute("aria-label",stars+" de 3 estrelas");
+  $("rtext").textContent="Você acertou "+R.right+" de "+N+" perguntas e ganhou "+stars+(stars===1?" estrela":" estrelas")+". "+(stars===3?"Que tal tentar um nível mais difícil?":"Jogue de novo para ganhar mais estrelas.");
+  show("result");
+}
+
+$("nodes").addEventListener("click",e=>{const n=e.target.closest(".node");if(n)start(n.dataset.s,n.dataset.l)});
+$("gopts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(b&&!b.disabled)answer(b)});
+$("gnext").addEventListener("click",()=>{if(R.i===N-1)finish();else{R.i++;renderQ();$("gq").scrollIntoView({block:"nearest"})}});
+$("gquit").addEventListener("click",()=>{renderHome();show("home")});
+$("again").addEventListener("click",()=>start(R.s,R.l));
+$("home2").addEventListener("click",()=>{renderHome();show("home")});
+$("reset").addEventListener("click",e=>{
+  const b=e.currentTarget;
+  if(b.dataset.sure){save={};persist();renderHome()}
+  else{b.dataset.sure="1";b.textContent="Clique de novo para apagar tudo"}
+});
+renderHome();
+</script>
+</body>
+</html>
